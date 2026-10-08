@@ -1,0 +1,25 @@
+# dependencies
+node_modules/
+
+# build output
+dist/
+build/
+coverage/
+*.tsbuildinfo
+
+# environment (never commit secrets)
+.env
+.env.*
+!.env.example
+
+# logs
+*.log
+npm-debug.log*
+
+# OS / editor
+Thumbs.db
+.DS_Store
+.idea/
+
+# docker
+pgdata/
