@@ -2,6 +2,7 @@ import { prisma } from '../config/db';
 import type { ExpenseCategory } from '../generated/prisma/enums';
 import type { SetBudgetInput } from '../schemas/budget.schema';
 import { formatCents, toCents } from '../utils/money';
+import { monthRange } from '../utils/period';
 
 export type BudgetStatus = 'NO_BUDGET' | 'OK' | 'WARNING' | 'OVER_BUDGET';
 
@@ -61,13 +62,6 @@ export async function setBudget(companyId: string, input: SetBudgetInput): Promi
     throw new Error('Budget upsert returned no row');
   }
   return budget;
-}
-
-function monthRange(year: number, month: number): { start: string; end: string } {
-  const pad = (value: number): string => String(value).padStart(2, '0');
-  const nextYear = month === 12 ? year + 1 : year;
-  const nextMonth = month === 12 ? 1 : month + 1;
-  return { start: `${year}-${pad(month)}-01`, end: `${nextYear}-${pad(nextMonth)}-01` };
 }
 
 function buildLine(budgetText: string | null, spentText: string): BudgetLine {
