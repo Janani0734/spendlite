@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { budgetRouter } from './budget.routes';
 import {
   createCompany,
   deleteCompany,
@@ -33,3 +34,4 @@ companyRouter.post(
 );
 
 companyRouter.use('/:companyId/expenses', requireMember, expenseRouter);
+companyRouter.use('/:companyId/budgets', requireMember, budgetRouter);

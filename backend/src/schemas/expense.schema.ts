@@ -13,8 +13,8 @@ export const EXPENSE_CATEGORIES = [
 // meaningful in one currency. Multi-currency is a listed future improvement.
 export const SUPPORTED_CURRENCIES = ['INR'] as const;
 
-const category = z.string().trim().toUpperCase().pipe(z.enum(EXPENSE_CATEGORIES));
-const currency = z.string().trim().toUpperCase().pipe(z.enum(SUPPORTED_CURRENCIES));
+export const category = z.string().trim().toUpperCase().pipe(z.enum(EXPENSE_CATEGORIES));
+export const currency = z.string().trim().toUpperCase().pipe(z.enum(SUPPORTED_CURRENCIES));
 
 // Accepts 450, 450.5 or "450.50": up to 10 integer digits and 2 decimals (Decimal(12,2)).
 const amountText = z
@@ -26,7 +26,7 @@ const amountText = z
       .regex(/^\d{1,10}(\.\d{1,2})?$/, 'Amount must be a number with at most 2 decimal places'),
   );
 
-const positiveAmount = amountText.refine(
+export const positiveAmount = amountText.refine(
   (value) => Number(value) > 0,
   'Amount must be greater than zero',
 );
