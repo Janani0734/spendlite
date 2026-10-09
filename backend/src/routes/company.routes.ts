@@ -13,6 +13,7 @@ import { validateBody } from '../middleware/validate';
 import { createCompanySchema } from '../schemas/company.schema';
 import { createInviteSchema } from '../schemas/invite.schema';
 import { asyncHandler } from '../utils/asyncHandler';
+import { expenseRouter } from './expense.routes';
 
 export const companyRouter = Router();
 
@@ -30,3 +31,5 @@ companyRouter.post(
   validateBody(createInviteSchema),
   asyncHandler(createInvite),
 );
+
+companyRouter.use('/:companyId/expenses', requireMember, expenseRouter);
