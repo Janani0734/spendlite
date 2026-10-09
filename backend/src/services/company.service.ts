@@ -60,3 +60,34 @@ export async function getCompany(companyId: string, role: Role): Promise<Company
     memberCount: company._count.members,
   };
 }
+export interface CompanyMemberView {
+  userId: string;
+  name: string;
+  email: string;
+  role: Role;
+  joinedAt: Date;
+}
+
+export async function listMembers(companyId: string): Promise<CompanyMemberView[]> {
+  const members = await prisma.companyMember.findMany({
+    where: { companyId },
+    select: {
+      role: true,
+      joinedAt: true,
+      user: { select: { id: true, name: true, email: true } },
+    },
+    orderBy: { joinedAt: 'asc' },
+  });
+  return members.map((member) => ({
+    userId: member.user.id,
+    name: member.user.name,
+    email: member.user.email,
+    role: member.role,
+    joinedAt: member.joinedAt,
+  }));
+}
+
+// Members, invites, expenses, and budgets go with the company via ON DELETE CASCADE.
+export async function deleteCompany(companyId: string): Promise<void> {
+  await prisma.company.delete({ where: { id: companyId } });
+}

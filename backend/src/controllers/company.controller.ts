@@ -21,3 +21,15 @@ export async function getCompany(req: Request, res: Response): Promise<void> {
   const company = await companyService.getCompany(membership.companyId, membership.role);
   sendSuccess(res, { company });
 }
+
+export async function listMembers(req: Request, res: Response): Promise<void> {
+  const membership = getMembership(req);
+  const members = await companyService.listMembers(membership.companyId);
+  sendSuccess(res, { members });
+}
+
+export async function deleteCompany(req: Request, res: Response): Promise<void> {
+  const membership = getMembership(req);
+  await companyService.deleteCompany(membership.companyId);
+  sendSuccess(res, { deleted: true });
+}
