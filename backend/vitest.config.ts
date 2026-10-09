@@ -41,6 +41,11 @@ export default defineConfig({
       JWT_SECRET: 'test-secret-test-secret-test-secret-1234',
       JWT_EXPIRES_IN_SECONDS: '3600',
       BCRYPT_ROUNDS: '4',
+            // Tests never use a real LLM: fetch is mocked, and these values are fake.
+      LLM_API_KEY: 'test-key',
+      LLM_BASE_URL: 'http://llm.test/v1',
+      LLM_MODEL: 'test-model',
+      LLM_TIMEOUT_MS: '5000',
     },
   },
 });
